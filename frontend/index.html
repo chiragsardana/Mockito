@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome to Admin</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            color: #ff5500;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="header.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-left">
+            <span>Welcome to Admin Panel</span>
+        </div>
+        <ul>
+            <li><a href="getAllCities.html">Cities</a></li>
+            <li><a href="getAllLocalities.html">Localities</a></li>
+            <li><a href="getAllUsers.html">Users</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Backend Developer: Assignment</h1>
+        <p>There are 
+            <span class="highlight">two modules </span>which work as follows:
+        </p>
+        <p>1. User Management Module: Allows admin to add, delete, modify a user and map his work area by defining
+            city and locality through drop down selection. The drop-down data comes through APIs from the second
+            module – Monitored Geo Module
+        </p>
+        <p>2. Monitored Geo Module allows admin to add/delete new city and new locality. It also allows association of a
+            locality to a city.</p>
+    </div>
+
+    <div class="container">
+        <h1>
+            Functionalities
+        </h1>
+        <p>
+            <span class="highlight">Users </span> Option Contains All the Users with 
+            respective Edit(Working as per requirements) and Delete Option(Working as per requirements), 
+            in the header part there is an option of Add User. In 
+            <span class="highlight">Add User </span> the user first have to select the city.
+            and then corresponding <span class="highlight">localities</span> is shown.
+            Also in the <span class="highlight">Update User Page</span> the id remains fixed
+            we can change everything.
+        </p>
+        <p>
+            <span class="highlight">Cities </span> Option Contains All the Cities with 
+            respective Edit(Not working) and Delete Option(as per requirements), 
+            in the header part there is an option of Add City.
+        </p>
+        <p>
+            <span class="highlight">Localities </span> Option Contains All the Localities with 
+            respective Edit(Not working) and Delete Option(as per requirements), 
+            in the header part there is an option of Add Locality. In 
+            <span class="highlight">Add Locality </span> the user must have to select the city.
+        </p>
+    </div>
+
+    <div class="container">
+        <h1>
+            Assumptions
+        </h1>
+        <p>
+            <span class="highlight">By Default</span> the User is 
+            <span class="highlight">Admin. </span>
+            Firstly Admin needs to add City, then the Admin can add Locality
+            through drop down selection for city 
+            <span class="highlight">Only those Locality</span>
+            is shown to Admin on the basis of the Selected city.
+            Admin can add the User 
+            <span class="highlight"></span> Admin can map the
+            <span class="highlight">Work</span> firstly by Selecting the <span class="highlight">City</span> and 
+            thereby <span class="highlight">Locality.</span>
+        </p>
+    </div>
+    <div class="container">
+        <h1>
+            Used Two Application Properites
+        </h1>
+        <p>
+            <span class="highlight">1. For Testing</span>
+            To Use Testing Enviroment we have to provide the 
+            <span class="highlight">spring.profiles.active=test</span>
+            <br>
+            <span class="highlight">2. For Development</span>
+            To Use Development Enviroment we have to provide the 
+            <span class="highlight">spring.profiles.active=dev</span>
+        </p>
+    </div>
+    <div class="container">
+        <h1>
+            Backend
+        </h1>
+        <p>
+            For Backend
+            <span class="highlight">Spring-Boot Framework </span>
+            
+            is used. 
+        </p>
+    </div>
+    <div class="container">
+        <h1>
+            Frontend
+        </h1>
+        <p>
+            For Frontend
+            <span class="highlight">HTML,CSS </span>
+            
+            is used. 
+        </p>
+    </div>
+    <div class="container">
+        <h1>
+            Integration
+        </h1>
+        <p>
+            For Integration between Frontend and Backend 
+            <span class="highlight">JavaScript</span>
+            
+            is used. 
+        </p>
+    </div>
+    <div class="container">
+        <h1>
+            Testing
+        </h1>
+        <p>
+            For testing
+            <span class="highlight">Mockito Framework </span>
+            
+            is used. 
+
+            As I'm using different Application.properties File, so I'm Skipping 
+            <span class="highlight">the test cases to be run while packaging</span>
+            So I'm using the command
+            <span class="highlight">mvn clean install -DskipTests</span>
+
+            Tu run the testing Files, I'm using the command 
+            <span class="highlight"> mvn test</span>
+
+        </p>
+    </div>
+
+
+    
+
+
+    <!-- Rest of your HTML content goes here -->
+</body>
+
+</html>

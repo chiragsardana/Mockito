@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add User</title>
+    <style>
+        /* Add your custom CSS styles here */
+    </style>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-left">
+            <span>Add User</span>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </div>
+    <br>
+    <br>
+    <div class="form-container">
+        <h2>Add User</h2>
+        <form id="addUserForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <select id="city" name="city" required>
+
+                    <!-- Populate the city options dynamically from the Geo Module API -->
+                    <option value="">None</option>
+                </select><br><br>
+            </div>
+            <div class="form-group">
+                <label for="locality">Locality:</label>
+                <select id="locality" name="locality" required>
+                    <!-- Populate the locality options dynamically based on the selected city -->
+                </select><br><br>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add User">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Fetch cities from the Geo Module API and populate the city dropdown
+        fetch('http://localhost:8080/api/cities')
+            .then(response => response.json())
+            .then(data => {
+                const citySelect = document.getElementById('city');
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.id;
+                    option.text = city.name;
+                    citySelect.appendChild(option);
+                });
+            });
+
+        // Update the locality dropdown based on the selected city
+        document.getElementById('city').addEventListener('change', function () {
+            const selectedCityId = this.value;
+            const localitySelect = document.getElementById('locality');
+
+            // Fetch localities based on the selected city from the Geo Module API
+            fetch(`http://localhost:8080/api/localities/cities/${selectedCityId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear the existing options
+                    localitySelect.innerHTML = '';
+
+                    // Add the new options
+                    data.forEach(locality => {
+                        const option = document.createElement('option');
+                        option.value = locality.id;
+                        option.text = locality.name;
+                        localitySelect.appendChild(option);
+                    });
+                });
+        });
+
+        // Handle form submission
+        document.getElementById('addUserForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const cityId = document.getElementById('city').value;
+            const localityId = document.getElementById('locality').value;
+
+            const user = {
+                name: name,
+                email: email,
+                cityId: cityId,
+                localityId: localityId
+            };
+
+            // Send the user data to the User Management Module API
+            fetch('http://localhost:8080/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // User added successfully, perform any necessary actions or display a success message
+                    console.log('User added:', data);
+                    // alert(data.email + " " + data.id);
+                    alert("User Added Successfully.");
+                    location.reload();
+                })
+                .catch(error => {
+                    // Error occurred while adding the user, handle the error or display an error message
+                    console.error('Error adding user:', error);
+                    alert("There is an Error in adding User.");
+                });
+        });
+    </script>
+</body>
+
+</html>

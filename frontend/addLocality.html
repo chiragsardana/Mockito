@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Locality</title>
+  <style>
+    /* Styles for the form */
+  </style>
+   <link rel="stylesheet" href="header.css">
+   <link rel="stylesheet" href="form.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-left">
+        <span>Add Locality</span>
+    </div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+    </ul>
+</div>
+<br>
+<br>
+  <div class="form-container">
+    <h2>Locality Form</h2>
+    <form id="localityForm">
+      <div class="form-group">
+        <label for="localityName">Locality Name:</label>
+        <input type="text" id="localityName" name="localityName" placeholder="Enter locality name" required>
+      </div>
+      <div class="form-group">
+        <label for="cityId">City:</label>
+        <select id="cityId" name="cityId" required>
+          <option value="">None</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Fetch cities from the API and populate the select box
+    fetch("http://localhost:8080/api/cities")
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Get the select box element
+        var citySelect = document.getElementById("cityId");
+
+        // Add cities to the select box
+        data.forEach(function(city) {
+          var option = document.createElement("option");
+          option.value = city.id;
+          option.textContent = city.name;
+          citySelect.appendChild(option);
+        });
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+
+    // Handle form submission
+    document.getElementById("localityForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get the input values
+      var localityName = document.getElementById("localityName").value;
+      var cityId = document.getElementById("cityId").value;
+
+      // Prepare the request body as an object
+      var requestBody = {
+        localityName: localityName,
+        cityId: parseInt(cityId)
+      };
+
+      // Make the API request
+      fetch("http://localhost:8080/api/localities", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        console.log(data); // Do something with the response data
+        // alert(data.id+" "+data.name+" "+data.city.id+" "+data.city.name);
+        alert("Locality Added Successfully.");
+        location.reload();
+      })
+      .catch(function(error) {
+        console.error(error);
+        // alert(error)
+        alert("There is an Error in adding Locality");
+      });
+    });
+  </script>
+</body>
+</html>

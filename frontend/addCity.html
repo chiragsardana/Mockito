@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add City</title>
+    <style>
+        /* Styles for the form */
+    </style>
+    <link rel="stylesheet" href="form.css">
+     <link rel="stylesheet" href="header.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-left">
+            <span>Add City</span>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </div>
+    <br>
+    <br>
+    <div class="form-container">
+        <h2>Add City Form</h2>
+        <form id="cityForm">
+            <div class="form-group">
+                <label for="cityName">City Name:</label>
+                <input type="text" id="cityName" name="cityName" placeholder="Enter city name" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById("cityForm").addEventListener("submit", 
+        function (event) {
+            
+            event.preventDefault(); 
+            // Prevent form submission
+
+            // Get the input value
+            var cityName = document.getElementById("cityName").value;
+
+            // Make the API request
+            fetch("http://localhost:8080/api/cities", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain" // Set the content type to plain text
+                },
+                body: cityName // Send the city name directly as the request body
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data.id);
+                    console.log(data.name); // Do something with the response data
+                    // alert("Id is "+ data.id+" and "+" Name is "+data.name);
+                    alert("City Added Successfully.");
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    // alert(error+"is the Error");
+                    alert("There is an error in adding City.")
+                });
+        });
+    </script>
+</body>
+
+</html>
